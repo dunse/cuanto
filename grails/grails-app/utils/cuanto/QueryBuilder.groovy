@@ -30,7 +30,6 @@ public class QueryBuilder {
 
 
 	CuantoQuery buildCount(QueryFilter queryFilter) {
-        Map<Object,Object> result
         List fromClauses = []
         List whereClauses = []
         List params = []
@@ -67,8 +66,9 @@ public class QueryBuilder {
         }
         String selectClause = queryFilter.countClause()
         String query = selectClause + " " +  fromClause + " where " + whereClause
-        result = [hql: query.toString(), 'params': params.flatten()]
-        return new CuantoQuery(hql: result.hql as String, positionalParameters: result.params as List)
+        return new CuantoQuery(
+	        hql: removeExtraWhitespaces(query),
+	        positionalParameters: params.flatten())
     }
 
 
@@ -103,11 +103,12 @@ public class QueryBuilder {
 		if (queryFilter.queryOffset) {
 			pagination.offset = queryFilter.queryOffset
 		}
-		def cuantoQuery = new CuantoQuery(hql: query.toString(), positionalParameters: base.params as List,
+		def cuantoQuery = new CuantoQuery(
+			hql: removeExtraWhitespaces(query),
+			positionalParameters: base.params,
 			paginateParameters: pagination)
 		return cuantoQuery
 	}
-
 
 	def buildQueryForBaseQuery(QueryFilter queryFilter) {
         List fromClauses = []
@@ -153,7 +154,7 @@ public class QueryBuilder {
 		}
 
         String query = selectClause + " " +  fromClause + " where " + whereClause
-		return [hql: query.toString(), 'params': params.flatten()]
+		return [hql: removeExtraWhitespaces(query), 'params': params.flatten()]
 	}
 
 
@@ -174,5 +175,11 @@ public class QueryBuilder {
 			throw new IllegalArgumentException("No QueryModule found for ${clazz.canonicalName}")
 		}
 		return modToReturn
+	}
+
+	private static String removeExtraWhitespaces(String query)
+	{
+		def queryWithoutExtraWhitespaces = query.replaceAll("\\s{2,}", " ")
+		queryWithoutExtraWhitespaces
 	}
 }

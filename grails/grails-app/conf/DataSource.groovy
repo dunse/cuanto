@@ -28,8 +28,8 @@ environments {
 			dialect = "org.hibernate.dialect.H2Dialect"
 			username = "sa"
 			password = ""
-			logSql = true
-			formatSql = true
+//			logSql = true
+//			formatSql = true
 		}
 	}
 	production {

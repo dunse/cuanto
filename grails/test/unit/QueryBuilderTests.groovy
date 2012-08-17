@@ -202,8 +202,8 @@ public class QueryBuilderTests extends GroovyTestCase {
 		qf.sorts << new SortParameters(sort: "testCase.fullName", sortOrder: "asc")
 
 		CuantoQuery expectedQuery = new CuantoQuery()
-		expectedQuery.hql =	"""select distinct t, t.testCase.fullName from cuanto.TestOutcome t where t.testRun = ? and (t.testCase.packageName like ? or
-			t.testCase.packageName like ?) order by t.testCase.fullName asc"""
+		expectedQuery.hql =	"select distinct t, t.testCase.fullName from cuanto.TestOutcome t where t.testRun = ? " +
+			"and (t.testCase.packageName like ? or t.testCase.packageName like ?) order by t.testCase.fullName asc"
 		expectedQuery.positionalParameters = [qf.testRun, qf.testCasePackage, qf.testCasePackage + "%"]
 		expectedQuery.paginateParameters = [:]
 
@@ -221,8 +221,8 @@ public class QueryBuilderTests extends GroovyTestCase {
 		qf.sorts << new SortParameters(sort: "testCase.fullName", sortOrder: "asc")
 
 		CuantoQuery expectedQuery = new CuantoQuery()
-		expectedQuery.hql = """select distinct t, t.testCase.fullName from cuanto.TestOutcome t where t.testRun = ? and
-			(t.testCase.packageName like ? or t.testCase.packageName like ?) order by t.testCase.fullName asc"""
+		expectedQuery.hql = "select distinct t, t.testCase.fullName from cuanto.TestOutcome t where t.testRun = ? " +
+			"and (t.testCase.packageName like ? or t.testCase.packageName like ?) order by t.testCase.fullName asc"
 		String expectedPkg = qf.testCasePackage.replaceAll("\\*", "%")
 		expectedQuery.positionalParameters = [qf.testRun, expectedPkg, "${expectedPkg}%"]
 		expectedQuery.paginateParameters = [:]
@@ -364,7 +364,7 @@ public class QueryBuilderTests extends GroovyTestCase {
 		qf.sorts << new SortParameters(sort: "testRun.dateExecuted", sortOrder: "desc")
 
 		CuantoQuery expectedQuery = new CuantoQuery()
-		expectedQuery.hql = "select distinct t, t.testRun.dateExecuted  from cuanto.TestOutcome t where upper(t.note) like ? order by t.testRun.dateExecuted desc"
+		expectedQuery.hql = "select distinct t, t.testRun.dateExecuted from cuanto.TestOutcome t where upper(t.note) like ? order by t.testRun.dateExecuted desc"
 		expectedQuery.positionalParameters = ["%${qf.note.toUpperCase()}%"]
 		expectedQuery.paginateParameters = [:]
 
@@ -441,7 +441,7 @@ public class QueryBuilderTests extends GroovyTestCase {
         qf.sorts << new SortParameters(sort: "testRun.dateExecuted", sortOrder: "desc")
 
         CuantoQuery expectedQuery = new CuantoQuery()
-        expectedQuery.hql = "select distinct t, t.testRun.dateExecuted from cuanto.TestOutcome t inner join t.tags tag_0 where t.testRun = ? and  t.testRun.dateExecuted > ? and t.testRun.dateExecuted < ? and (upper(tag_0.name) like ? or upper(tag_0.name) like ?) order by t.testRun.dateExecuted desc"
+        expectedQuery.hql = "select distinct t, t.testRun.dateExecuted from cuanto.TestOutcome t inner join t.tags tag_0 where t.testRun = ? and t.testRun.dateExecuted > ? and t.testRun.dateExecuted < ? and (upper(tag_0.name) like ? or upper(tag_0.name) like ?) order by t.testRun.dateExecuted desc"
         expectedQuery.positionalParameters = [qf.testRun, qf.dateCriteria[0].date, qf.dateCriteria[1].date, qf.tags[0].toUpperCase(), qf.tags[1].toUpperCase()]
         expectedQuery.paginateParameters = [:]
 
