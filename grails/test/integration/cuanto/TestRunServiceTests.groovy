@@ -1,7 +1,7 @@
 package cuanto
-
 import cuanto.test.TestObjects
 import cuanto.test.WordGenerator
+import org.apache.commons.lang.RandomStringUtils
 
 class TestRunServiceTests extends GroovyTestCase {
 
@@ -156,6 +156,9 @@ class TestRunServiceTests extends GroovyTestCase {
 			testCases.add(testCase)
 		}
 
+		def sharedKeyword = RandomStringUtils.randomAlphanumeric(8)
+		testCases[0].fullName = "a" + testCases[0].fullName + sharedKeyword
+		testCases[1].fullName = "b" + sharedKeyword + testCases[1].fullName
 		def testRunOne = to.getTestRun(proj)
 		testRunOne.save()
 
@@ -174,31 +177,24 @@ class TestRunServiceTests extends GroovyTestCase {
 
 		def runOneOutcomes = dataService.getTestOutcomes(
 			new TestOutcomeQueryFilter(testRun: testRunOne, testResultIncludedInCalculations: true))
-
-		runOneOutcomes[0].testCase.fullName = "a Pacific Ocean Blue"
-		runOneOutcomes[0].testCase.save()
-		runOneOutcomes[1].testCase.fullName = "b Lost in the Pacific"
-		runOneOutcomes[1].testCase.save()
-
 		def runTwoOutcomes = dataService.getTestOutcomes(
 			new TestOutcomeQueryFilter(testRun: testRunTwo, testResultIncludedInCalculations: true))
-		runTwoOutcomes[0].testCase.fullName = "a Pacific Lake Blue"
-		runTwoOutcomes[0].testCase.save()
-		runTwoOutcomes[1].testCase.fullName = "b Found in the Pacific"
-		runTwoOutcomes[1].testCase.save()
 
+
+		def expectedOutcomeA = runOneOutcomes.find { it.testCase.id == testCases[0].id }
+		def expectedOutcomeB = runOneOutcomes.find { it.testCase.id == testCases[1].id }
 		def runOneParams = ['sort': 'name', 'order': 'asc', 'max': 10, 'offset': 0, 'id': testRunOne.id,
-			'qry': 'name|Pacific']
+			'qry': "name|$sharedKeyword"]
 		def searchResults = testOutcomeService.getTestOutcomeQueryResultsForParams(runOneParams).testOutcomes
 		assertEquals "Wrong number of outcomes returned", 2, searchResults.size()
-		assertEquals "Wrong outcome", runOneOutcomes[0], searchResults[0]
-		assertEquals "Wrong outcome", runOneOutcomes[1], searchResults[1]
+		assertEquals "Wrong outcome", expectedOutcomeA, searchResults[0]
+		assertEquals "Wrong outcome", expectedOutcomeB, searchResults[1]
 
 		runOneParams['order'] = "desc"
 		searchResults = testOutcomeService.getTestOutcomeQueryResultsForParams(runOneParams).testOutcomes
 		assertEquals "Wrong number of outcomes returned", 2, searchResults.size()
-		assertEquals "Wrong outcome", runOneOutcomes[1], searchResults[0]
-		assertEquals "Wrong outcome", runOneOutcomes[0], searchResults[1]
+		assertEquals "Wrong outcome", expectedOutcomeB, searchResults[0]
+		assertEquals "Wrong outcome", expectedOutcomeA, searchResults[1]
 	}
 
 

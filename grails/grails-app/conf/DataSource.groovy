@@ -23,10 +23,13 @@ environments {
 	test {
 		dataSource {
 			dbCreate = "update"
-			driverClassName = "org.hsqldb.jdbcDriver"
-			url = "jdbc:hsqldb:mem:testDb"
+			driverClassName = "org.h2.Driver"
+			url = "jdbc:h2:~/.grails/cuanto;MVCC=TRUE"
+			dialect = "org.hibernate.dialect.H2Dialect"
 			username = "sa"
 			password = ""
+			logSql = true
+			formatSql = true
 		}
 	}
 	production {

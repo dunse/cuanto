@@ -589,22 +589,15 @@ public class TestOutcomeServiceTests extends GroovyTestCase {
 	def textWithoutScriptTags = '''
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 			Duis luctus erat ultrices ipsum mollis nec scelerisque nibh eleifend.
-			Vivamus hendrerit cursus viverra. Pellentesque dui sem, convallis non eleifend ut, commodo id elit.
-			Aenean imperdiet lectus eu diam molestie sollicitudin. Curabitur id libero neque, non vulputate leo.'''
+			Vivamus hendrerit cursus viverra. Pellentesque dui sem, convallis non eleifend ut, commodo id elit.'''
 	def textWithScriptTags = '''
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 			<script type="text/javascript"><![CDATA[
 				Duis luctus erat ultrices ipsum mollis nec scelerisque nibh eleifend.
 			// ]]></script>
-			Vivamus hendrerit cursus viverra. Pellentesque dui sem, convallis non eleifend ut, commodo id elit.
-			Aenean imperdiet lectus eu diam molestie sollicitudin. Curabitur <script type="text/javascript">id</script>
-			libero neque, non vulputate leo.'''
+			<script type="text/javascript">id</script>'''
 	def textWithSanitizedScriptTags = '''
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 			&lt;script type="text/javascript"><![CDATA[
 				Duis luctus erat ultrices ipsum mollis nec scelerisque nibh eleifend.
 			// ]]>&lt;/script&gt;
-			Vivamus hendrerit cursus viverra. Pellentesque dui sem, convallis non eleifend ut, commodo id elit.
-			Aenean imperdiet lectus eu diam molestie sollicitudin. Curabitur &lt;script type="text/javascript">id&lt;/script&gt;
-			libero neque, non vulputate leo.'''
+			&lt;script type="text/javascript">id&lt;/script&gt;'''
 }
