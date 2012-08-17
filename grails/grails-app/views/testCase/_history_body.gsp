@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	%>
 	<div>
 		Filter Results: <g:select id="tcHistoryFilter" value="${defaultFilter}" optionKey="id" optionValue="value"
-			from="${filterList}"/>
+			from="${filterList}" name="historyFilter"/>
 		<p/>
 		<br/>
 	</div>
