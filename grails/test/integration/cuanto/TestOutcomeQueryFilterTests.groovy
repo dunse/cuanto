@@ -65,8 +65,8 @@ public class TestOutcomeQueryFilterTests extends GroovyTestCase {
 		assertEquals "Wrong number of outcomes", outcomesA.size(), fetchedOutcomes.size()
 		assertNotNull "Outcome 1 not found", fetchedOutcomes.find { it.id == outcomesA[0].id }
 		assertNotNull "Outcome 2 not found", fetchedOutcomes.find { it.id == outcomesA[1].id }
-		assertEquals "Outcome 1", outcomesA[0], fetchedOutcomes[0]
-		assertEquals "Outcome 2", outcomesA[1], fetchedOutcomes[1]
+		assertTrue "Outcome 1", outcomesA[0] in fetchedOutcomes[0]
+		assertTrue "Outcome 2", outcomesA[1] in fetchedOutcomes[1]
 
 		queryFilterA.sorts = [new SortParameters(sort:"testCase.fullName", sortOrder: "asc")]
 		fetchedOutcomes = dataService.getTestOutcomes(queryFilterA)

@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				<br/>
 				<div>
 					<span>Filter Results: <g:select id="trDetailsFilter" value="${filter}" optionKey="id" optionValue="value"
-						from="${filterList}"/> </span>
+						from="${filterList}" name="detailsFilter"/> </span>
 					<span id="nameFormat" class="formHeader">Name Format:
 						<g:select id="tcFormat" from="${formatters}" optionKey="key" optionValue="description" name="tcFormat"
 							value="${tcFormat}"/>
@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
         <div id="outputTab">
 	        <span>Filter Results: <g:select id="trOutputFilter" value="${outputFilter}" optionKey="id" optionValue="value"
-		        from="${outputFilterList}"/> </span>
+		        from="${outputFilterList}" name="outputFilter"/> </span>
             <div id='trOutputTable'>Loading...</div>
             <div id='trOutputPaging'></div>
 	        <span id="grpOutputTotalRows">0</span> total rows

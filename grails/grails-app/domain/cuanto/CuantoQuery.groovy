@@ -23,4 +23,39 @@ public class CuantoQuery {
 	String hql
 	List positionalParameters
 	Map paginateParameters
+
+	@Override
+	public String toString()
+	{
+		return "CuantoQuery{" +
+			"hql='" + hql + '\'' +
+			", positionalParameters=" + positionalParameters +
+			", paginateParameters=" + paginateParameters +
+			'}';
+	}
+
+	@Override
+	public boolean equals(o)
+	{
+		if (is(o)) return true
+		if (getClass() != o.class) return false
+
+		CuantoQuery that = (CuantoQuery) o
+
+		if (hql != that.hql) return false
+		if (paginateParameters != that.paginateParameters) return false
+		if (positionalParameters != that.positionalParameters) return false
+
+		return true
+	}
+
+	@Override
+	public int hashCode()
+	{
+		int result
+		result = (hql != null ? hql.hashCode() : 0)
+		result = 31 * result + (positionalParameters != null ? positionalParameters.hashCode() : 0)
+		result = 31 * result + (paginateParameters != null ? paginateParameters.hashCode() : 0)
+		return result
+	}
 }
